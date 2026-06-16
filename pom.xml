@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.ojalgo</groupId>
     <artifactId>optimisation-models</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <name>optimisation-models</name>
     <description>Collection of optimisation test models (LP/MIP/QP) packaged
         as classpath resources. Used by ojAlgo and related projects for
