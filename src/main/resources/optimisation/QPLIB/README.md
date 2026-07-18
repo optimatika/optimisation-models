@@ -12,6 +12,13 @@ quadratic constraints. Selected from 8,164 submitted instances, the
 collection is classified by a three-letter problem type code (see below).
 Licensed under CC-BY 4.0.
 
+Despite the name, QPLIB contains essentially no standard convex QP
+problems. Of 453 instances: 70% are discrete (binary, integer, or mixed),
+and the 134 continuous instances are dominated by non-convex quadratic
+constraints (QCQP). Only 16 instances are convex QPs with linear
+constraints, and all are large (1,500+ variables). For convex QP
+benchmarking, use the Maros-Meszaros collection instead.
+
 ## References
 
 - F. Furini, E. Traversi, P. Belotti, A. Frangioni, A. Gleixner,
