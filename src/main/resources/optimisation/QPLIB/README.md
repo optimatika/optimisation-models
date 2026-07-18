@@ -8,14 +8,25 @@ not included; they can be downloaded from qplib.zib.de.
 QPLIB collects quadratic programming instances spanning a wide range of
 problem structures: linear, convex, and non-convex objectives; continuous,
 binary, integer, and mixed variables; and linear through non-convex
-quadratic constraints. Each instance is classified by a three-letter
-problem type code (see below).
+quadratic constraints. Selected from 8,164 submitted instances, the
+collection is classified by a three-letter problem type code (see below).
+Licensed under CC-BY 4.0.
+
+## References
+
+- F. Furini, E. Traversi, P. Belotti, A. Frangioni, A. Gleixner,
+  N. Gould, L. Liberti, A. Lodi, R. Misener, H. Mittelmann,
+  N. V. Sahinidis, S. Vigerske, and A. Wiegele, "QPLIB: A Library
+  of Quadratic Programming Instances," Mathematical Programming
+  Computation, 11(2), pp. 237-265, 2019.
+  DOI: 10.1007/s12532-018-0147-4
 
 ## Source
 
 | | |
 |---|---|
 | Downloaded From | qplib.zib.de |
+| Also Available At | github.com/ralna/QPLIB |
 | Total Instances | 453 |
 | Included | 382 |
 | Excluded | 71 |
