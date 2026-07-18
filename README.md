@@ -75,7 +75,3 @@ Add as a test dependency:
 ```
 
 Models are available on the classpath under `optimisation/{collection}/`.
-
-## License
-
-MIT
