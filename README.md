@@ -18,6 +18,7 @@ repository and Maven artifact manageable.
 | [netlib](src/main/resources/optimisation/netlib) | 97 | SIF | LP | numerical.rl.ac.uk/cute/netlib.html |
 | [MIPLIB](src/main/resources/optimisation/MIPLIB) | 495 | MPS | MIP | miplib.zib.de |
 | [QPLIB](src/main/resources/optimisation/QPLIB) | 382 | LP + SOL | QP / MIQP | qplib.zib.de |
+| [minizinc](src/main/resources/optimisation/minizinc) | 449 | FlatZinc | MIP | github.com/MiniZinc/minizinc-benchmarks |
 
 ### burkardt
 
@@ -60,6 +61,16 @@ smaller instance whose dense quadratic objective produces a file
 exceeding 100MB. See [QPLIB/README.md](src/main/resources/optimisation/QPLIB/README.md)
 for per-instance details, problem type codes, and the full list
 including excluded instances available from qplib.zib.de.
+
+### minizinc
+
+Models from the MiniZinc benchmark suite – mostly constraint programming
+problems – compiled to FlatZinc with MiniZinc's linear library, so every
+model is a MIP. Up to 5 instances per problem, in one folder per problem
+category (scheduling, routing, packing-cutting...), with reference results
+from HiGHS. Read with ojAlgo as `FileFormat.FZN`.
+See [minizinc/README.md](src/main/resources/optimisation/minizinc/README.md)
+for the categories and per-instance details.
 
 ## Usage
 

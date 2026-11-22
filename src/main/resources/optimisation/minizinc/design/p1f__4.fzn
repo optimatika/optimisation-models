@@ -1,0 +1,528 @@
+% minizinc-benchmarks/p1f: p1f.mzn 4.dzn
+% Compiled with MiniZinc 2.11.0 and its linear library (-Glinear)
+%
+%------------------------------------------------------------------------%
+% Find a perfect 1-factorization of the graph K_n
+%------------------------------------------------------------------------%
+%
+% A 1-factorization is a partition of the edges of the graph into m-1
+% complete matchings. For the 1-factorization to be perfect, every
+% pair of matchings must form a Hamiltonian circuit of the graph. To
+% make the problem interesting it is specified as an
+% optimization-problem, forcing an ordering on the solutions.
+%
+% This model tests using several different global constraints in the 
+% same model. The global constraints used are:
+%  - alldifferent
+%  - inverse
+%  - lex_less
+%  - element
+% Unfortunately, a decomposition of circuit is used since it is not
+% available in the MiniZinc distribution. 
+%
+% In particular, the proof of optimality takes a very long time if
+% strong pruning for alldifferent is not used.
+%
+%  Main authors:
+%     Mikael Zayenz Lagerkvist <lagerkvist@gecode.org>
+%
+%  Copyright:
+%     Mikael Zayenz Lagerkvist, 2009
+%
+%  Permission is hereby granted, free of charge, to any person obtaining
+%  a copy of this software and associated documentation files (the
+%  "Software"), to deal in the Software without restriction, including
+%  without limitation the rights to use, copy, modify, merge, publish,
+%  distribute, sublicense, and/or sell copies of the Software, and to
+%  permit persons to whom the Software is furnished to do so, subject to
+%  the following conditions:
+%
+%  The above copyright notice and this permission notice shall be
+%  included in all copies or substantial portions of the Software.
+%
+%  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+%  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+%  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+%  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+%  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+%  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+%  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%
+%------------------------------------------------------------------------%
+
+array [1..3] of int: X_INTRODUCED_123_ = [1,1,1];
+array [1..4] of int: X_INTRODUCED_128_ = [1,-2,-3,-4];
+array [1..4] of int: X_INTRODUCED_161_ = [1,-1,-3,-4];
+array [1..4] of int: X_INTRODUCED_193_ = [1,-1,-2,-4];
+array [1..4] of int: X_INTRODUCED_224_ = [1,-1,-2,-3];
+array [1..2] of int: X_INTRODUCED_254_ = [1,1];
+array [1..3] of int: X_INTRODUCED_257_ = [1,-1,-2];
+array [1..3] of int: X_INTRODUCED_263_ = [-1,1,2];
+array [1..3] of int: X_INTRODUCED_266_ = [1,-1,2];
+array [1..3] of int: X_INTRODUCED_287_ = [-1,1,3];
+array [1..3] of int: X_INTRODUCED_289_ = [1,-1,3];
+array [1..4] of int: X_INTRODUCED_377_ = [1,3,1,-1];
+array [1..4] of int: X_INTRODUCED_383_ = [1,-1,1,3];
+array [1..4] of int: X_INTRODUCED_385_ = [3,1,-1,1];
+array [1..4] of int: X_INTRODUCED_392_ = [-1,1,3,1];
+array [1..4] of int: X_INTRODUCED_705_ = [1,1,1,1];
+array [1..3] of int: X_INTRODUCED_712_ = [1,-1,1];
+array [1..3] of int: X_INTRODUCED_729_ = [1,-1,4];
+array [1..2] of int: X_INTRODUCED_798_ = [-1,-1];
+var 2..4: X_INTRODUCED_17_:: is_defined_var;
+var 1..4: X_INTRODUCED_18_:: is_defined_var;
+var 1..4: X_INTRODUCED_19_:: is_defined_var;
+var 1..3: X_INTRODUCED_20_:: is_defined_var;
+var 2..4: X_INTRODUCED_21_:: is_defined_var;
+var 1..4: X_INTRODUCED_22_:: is_defined_var;
+var 1..4: X_INTRODUCED_23_:: is_defined_var;
+var 1..3: X_INTRODUCED_24_:: is_defined_var;
+var 2..4: X_INTRODUCED_25_:: is_defined_var;
+var 1..4: X_INTRODUCED_26_:: is_defined_var;
+var 1..4: X_INTRODUCED_27_:: is_defined_var;
+var 1..3: X_INTRODUCED_28_:: is_defined_var;
+var 10..40: objective:: is_defined_var;
+var 0..1: X_INTRODUCED_53_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_57_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_62_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_80_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_84_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_89_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_94_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_98_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_102_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_107_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_111_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_116_ ::var_is_introduced ;
+var 1..2: X_INTRODUCED_247_ ::var_is_introduced :: is_defined_var;
+var 0..1: X_INTRODUCED_250_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_251_ ::var_is_introduced ;
+var 1..2: X_INTRODUCED_275_ ::var_is_introduced :: is_defined_var;
+var 1..4: X_INTRODUCED_277_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_278_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_279_ ::var_is_introduced ;
+var 1..2: X_INTRODUCED_294_ ::var_is_introduced :: is_defined_var;
+var 1..4: X_INTRODUCED_296_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_297_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_298_ ::var_is_introduced ;
+var 1..2: X_INTRODUCED_311_ ::var_is_introduced :: is_defined_var;
+var 1..3: X_INTRODUCED_313_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_314_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_315_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_328_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_329_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_330_ ::var_is_introduced ;
+var 2..4: X_INTRODUCED_373_ ::var_is_introduced ;
+var 2..4: X_INTRODUCED_374_ ::var_is_introduced ;
+var 2..4: X_INTRODUCED_375_ ::var_is_introduced ;
+var 1..2: X_INTRODUCED_407_ ::var_is_introduced :: is_defined_var;
+var 0..1: X_INTRODUCED_410_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_411_ ::var_is_introduced ;
+var 1..2: X_INTRODUCED_428_ ::var_is_introduced :: is_defined_var;
+var 1..4: X_INTRODUCED_430_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_431_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_432_ ::var_is_introduced ;
+var 1..2: X_INTRODUCED_445_ ::var_is_introduced :: is_defined_var;
+var 1..4: X_INTRODUCED_447_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_448_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_449_ ::var_is_introduced ;
+var 1..2: X_INTRODUCED_462_ ::var_is_introduced :: is_defined_var;
+var 1..3: X_INTRODUCED_464_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_465_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_466_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_479_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_480_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_481_ ::var_is_introduced ;
+var 2..4: X_INTRODUCED_523_ ::var_is_introduced ;
+var 2..4: X_INTRODUCED_524_ ::var_is_introduced ;
+var 2..4: X_INTRODUCED_525_ ::var_is_introduced ;
+var 1..2: X_INTRODUCED_553_ ::var_is_introduced :: is_defined_var;
+var 0..1: X_INTRODUCED_556_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_557_ ::var_is_introduced ;
+var 1..2: X_INTRODUCED_574_ ::var_is_introduced :: is_defined_var;
+var 1..4: X_INTRODUCED_576_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_577_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_578_ ::var_is_introduced ;
+var 1..2: X_INTRODUCED_591_ ::var_is_introduced :: is_defined_var;
+var 1..4: X_INTRODUCED_593_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_594_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_595_ ::var_is_introduced ;
+var 1..2: X_INTRODUCED_608_ ::var_is_introduced :: is_defined_var;
+var 1..3: X_INTRODUCED_610_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_611_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_612_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_625_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_626_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_627_ ::var_is_introduced ;
+var 2..4: X_INTRODUCED_669_ ::var_is_introduced ;
+var 2..4: X_INTRODUCED_670_ ::var_is_introduced ;
+var 2..4: X_INTRODUCED_671_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_700_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_701_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_702_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_703_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_706_ ::var_is_introduced :: is_defined_var;
+var 0..1: X_INTRODUCED_707_ ::var_is_introduced :: is_defined_var;
+var 0..1: X_INTRODUCED_708_ ::var_is_introduced :: is_defined_var;
+var 0..1: X_INTRODUCED_709_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_746_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_747_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_748_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_749_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_751_ ::var_is_introduced :: is_defined_var;
+var 0..1: X_INTRODUCED_752_ ::var_is_introduced :: is_defined_var;
+var 0..1: X_INTRODUCED_753_ ::var_is_introduced :: is_defined_var;
+var 0..1: X_INTRODUCED_754_ ::var_is_introduced ;
+var bool: X_INTRODUCED_789_ ::var_is_introduced ;
+var bool: X_INTRODUCED_791_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_792_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_795_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_796_ ::var_is_introduced ;
+var bool: X_INTRODUCED_799_ ::var_is_introduced ;
+var bool: X_INTRODUCED_801_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_802_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_804_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_805_ ::var_is_introduced ;
+var bool: X_INTRODUCED_807_ ::var_is_introduced ;
+var bool: X_INTRODUCED_809_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_810_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_812_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_813_ ::var_is_introduced ;
+var bool: X_INTRODUCED_815_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_816_ ::var_is_introduced ;
+var bool: X_INTRODUCED_817_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_818_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_820_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_821_ ::var_is_introduced ;
+var bool: X_INTRODUCED_823_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_824_ ::var_is_introduced ;
+var bool: X_INTRODUCED_825_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_826_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_828_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_829_ ::var_is_introduced ;
+var bool: X_INTRODUCED_831_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_832_ ::var_is_introduced ;
+var bool: X_INTRODUCED_833_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_834_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_836_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_837_ ::var_is_introduced ;
+var bool: X_INTRODUCED_839_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_840_ ::var_is_introduced ;
+var bool: X_INTRODUCED_841_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_842_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_844_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_845_ ::var_is_introduced ;
+var bool: X_INTRODUCED_847_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_848_ ::var_is_introduced ;
+var bool: X_INTRODUCED_849_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_850_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_852_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_853_ ::var_is_introduced ;
+var bool: X_INTRODUCED_855_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_856_ ::var_is_introduced ;
+var bool: X_INTRODUCED_857_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_858_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_860_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_861_ ::var_is_introduced ;
+var bool: X_INTRODUCED_863_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_864_ ::var_is_introduced ;
+var bool: X_INTRODUCED_865_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_866_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_868_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_869_ ::var_is_introduced ;
+var bool: X_INTRODUCED_871_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_872_ ::var_is_introduced ;
+var bool: X_INTRODUCED_873_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_874_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_876_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_877_ ::var_is_introduced ;
+var bool: X_INTRODUCED_879_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_880_ ::var_is_introduced ;
+var bool: X_INTRODUCED_881_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_882_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_884_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_885_ ::var_is_introduced ;
+var bool: X_INTRODUCED_887_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_888_ ::var_is_introduced ;
+var bool: X_INTRODUCED_889_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_890_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_892_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_893_ ::var_is_introduced ;
+var bool: X_INTRODUCED_895_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_896_ ::var_is_introduced ;
+var bool: X_INTRODUCED_897_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_898_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_900_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_901_ ::var_is_introduced ;
+var bool: X_INTRODUCED_903_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_904_ ::var_is_introduced ;
+var bool: X_INTRODUCED_905_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_906_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_908_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_909_ ::var_is_introduced ;
+var bool: X_INTRODUCED_911_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_912_ ::var_is_introduced ;
+var bool: X_INTRODUCED_913_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_914_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_916_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_917_ ::var_is_introduced ;
+var bool: X_INTRODUCED_919_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_920_ ::var_is_introduced ;
+var bool: X_INTRODUCED_921_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_922_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_924_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_925_ ::var_is_introduced ;
+var bool: X_INTRODUCED_927_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_928_ ::var_is_introduced ;
+var bool: X_INTRODUCED_929_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_930_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_932_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_933_ ::var_is_introduced ;
+array [1..12] of var int: X_INTRODUCED_16_:: output_array([1..12]) = [X_INTRODUCED_17_,X_INTRODUCED_18_,X_INTRODUCED_19_,X_INTRODUCED_20_,X_INTRODUCED_21_,X_INTRODUCED_22_,X_INTRODUCED_23_,X_INTRODUCED_24_,X_INTRODUCED_25_,X_INTRODUCED_26_,X_INTRODUCED_27_,X_INTRODUCED_28_];
+array [1..12] of var int: X_INTRODUCED_787_ ::var_is_introduced  = [X_INTRODUCED_17_,X_INTRODUCED_18_,X_INTRODUCED_19_,X_INTRODUCED_20_,X_INTRODUCED_21_,X_INTRODUCED_22_,X_INTRODUCED_23_,X_INTRODUCED_24_,X_INTRODUCED_25_,X_INTRODUCED_26_,X_INTRODUCED_27_,X_INTRODUCED_28_];
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_840_,X_INTRODUCED_848_,X_INTRODUCED_856_],1);
+constraint int_lin_eq(X_INTRODUCED_128_,[X_INTRODUCED_17_,X_INTRODUCED_840_,X_INTRODUCED_848_,X_INTRODUCED_856_],0):: defines_var(X_INTRODUCED_17_);
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_888_,X_INTRODUCED_896_,X_INTRODUCED_904_],1);
+constraint int_lin_eq(X_INTRODUCED_128_,[X_INTRODUCED_21_,X_INTRODUCED_888_,X_INTRODUCED_896_,X_INTRODUCED_904_],0):: defines_var(X_INTRODUCED_21_);
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_94_,X_INTRODUCED_98_,X_INTRODUCED_102_],1);
+constraint int_lin_eq(X_INTRODUCED_128_,[X_INTRODUCED_25_,X_INTRODUCED_94_,X_INTRODUCED_98_,X_INTRODUCED_102_],0):: defines_var(X_INTRODUCED_25_);
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_840_,X_INTRODUCED_888_,X_INTRODUCED_94_],1):: domain;
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_848_,X_INTRODUCED_896_,X_INTRODUCED_98_],1):: domain;
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_856_,X_INTRODUCED_904_,X_INTRODUCED_102_],1):: domain;
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_840_,X_INTRODUCED_53_,X_INTRODUCED_57_],1);
+constraint int_lin_eq(X_INTRODUCED_161_,[X_INTRODUCED_18_,X_INTRODUCED_840_,X_INTRODUCED_53_,X_INTRODUCED_57_],0):: defines_var(X_INTRODUCED_18_);
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_888_,X_INTRODUCED_80_,X_INTRODUCED_84_],1);
+constraint int_lin_eq(X_INTRODUCED_161_,[X_INTRODUCED_22_,X_INTRODUCED_888_,X_INTRODUCED_80_,X_INTRODUCED_84_],0):: defines_var(X_INTRODUCED_22_);
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_94_,X_INTRODUCED_107_,X_INTRODUCED_111_],1);
+constraint int_lin_eq(X_INTRODUCED_161_,[X_INTRODUCED_26_,X_INTRODUCED_94_,X_INTRODUCED_107_,X_INTRODUCED_111_],0):: defines_var(X_INTRODUCED_26_);
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_840_,X_INTRODUCED_888_,X_INTRODUCED_94_],1):: domain;
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_53_,X_INTRODUCED_80_,X_INTRODUCED_107_],1):: domain;
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_57_,X_INTRODUCED_84_,X_INTRODUCED_111_],1):: domain;
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_848_,X_INTRODUCED_53_,X_INTRODUCED_62_],1);
+constraint int_lin_eq(X_INTRODUCED_193_,[X_INTRODUCED_19_,X_INTRODUCED_848_,X_INTRODUCED_53_,X_INTRODUCED_62_],0):: defines_var(X_INTRODUCED_19_);
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_896_,X_INTRODUCED_80_,X_INTRODUCED_89_],1);
+constraint int_lin_eq(X_INTRODUCED_193_,[X_INTRODUCED_23_,X_INTRODUCED_896_,X_INTRODUCED_80_,X_INTRODUCED_89_],0):: defines_var(X_INTRODUCED_23_);
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_98_,X_INTRODUCED_107_,X_INTRODUCED_116_],1);
+constraint int_lin_eq(X_INTRODUCED_193_,[X_INTRODUCED_27_,X_INTRODUCED_98_,X_INTRODUCED_107_,X_INTRODUCED_116_],0):: defines_var(X_INTRODUCED_27_);
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_848_,X_INTRODUCED_896_,X_INTRODUCED_98_],1):: domain;
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_53_,X_INTRODUCED_80_,X_INTRODUCED_107_],1):: domain;
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_62_,X_INTRODUCED_89_,X_INTRODUCED_116_],1):: domain;
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_856_,X_INTRODUCED_57_,X_INTRODUCED_62_],1);
+constraint int_lin_eq(X_INTRODUCED_224_,[X_INTRODUCED_20_,X_INTRODUCED_856_,X_INTRODUCED_57_,X_INTRODUCED_62_],0):: defines_var(X_INTRODUCED_20_);
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_904_,X_INTRODUCED_84_,X_INTRODUCED_89_],1);
+constraint int_lin_eq(X_INTRODUCED_224_,[X_INTRODUCED_24_,X_INTRODUCED_904_,X_INTRODUCED_84_,X_INTRODUCED_89_],0):: defines_var(X_INTRODUCED_24_);
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_102_,X_INTRODUCED_111_,X_INTRODUCED_116_],1);
+constraint int_lin_eq(X_INTRODUCED_224_,[X_INTRODUCED_28_,X_INTRODUCED_102_,X_INTRODUCED_111_,X_INTRODUCED_116_],0):: defines_var(X_INTRODUCED_28_);
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_856_,X_INTRODUCED_904_,X_INTRODUCED_102_],1):: domain;
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_57_,X_INTRODUCED_84_,X_INTRODUCED_111_],1):: domain;
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_62_,X_INTRODUCED_89_,X_INTRODUCED_116_],1):: domain;
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_250_,X_INTRODUCED_251_],1);
+constraint int_lin_eq(X_INTRODUCED_257_,[X_INTRODUCED_247_,X_INTRODUCED_250_,X_INTRODUCED_251_],0):: defines_var(X_INTRODUCED_247_);
+constraint int_lin_le(X_INTRODUCED_263_,[X_INTRODUCED_21_,X_INTRODUCED_17_,X_INTRODUCED_251_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_266_,[X_INTRODUCED_21_,X_INTRODUCED_17_,X_INTRODUCED_251_],2):: domain;
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_278_,X_INTRODUCED_279_],1);
+constraint int_lin_eq(X_INTRODUCED_257_,[X_INTRODUCED_275_,X_INTRODUCED_278_,X_INTRODUCED_279_],0):: defines_var(X_INTRODUCED_275_);
+constraint int_lin_le(X_INTRODUCED_287_,[X_INTRODUCED_18_,X_INTRODUCED_277_,X_INTRODUCED_278_],3):: domain;
+constraint int_lin_le(X_INTRODUCED_289_,[X_INTRODUCED_18_,X_INTRODUCED_277_,X_INTRODUCED_278_],3):: domain;
+constraint int_lin_le(X_INTRODUCED_287_,[X_INTRODUCED_22_,X_INTRODUCED_277_,X_INTRODUCED_279_],3):: domain;
+constraint int_lin_le(X_INTRODUCED_289_,[X_INTRODUCED_22_,X_INTRODUCED_277_,X_INTRODUCED_279_],3):: domain;
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_297_,X_INTRODUCED_298_],1);
+constraint int_lin_eq(X_INTRODUCED_257_,[X_INTRODUCED_294_,X_INTRODUCED_297_,X_INTRODUCED_298_],0):: defines_var(X_INTRODUCED_294_);
+constraint int_lin_le(X_INTRODUCED_287_,[X_INTRODUCED_19_,X_INTRODUCED_296_,X_INTRODUCED_297_],3):: domain;
+constraint int_lin_le(X_INTRODUCED_289_,[X_INTRODUCED_19_,X_INTRODUCED_296_,X_INTRODUCED_297_],3):: domain;
+constraint int_lin_le(X_INTRODUCED_287_,[X_INTRODUCED_23_,X_INTRODUCED_296_,X_INTRODUCED_298_],3):: domain;
+constraint int_lin_le(X_INTRODUCED_289_,[X_INTRODUCED_23_,X_INTRODUCED_296_,X_INTRODUCED_298_],3):: domain;
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_314_,X_INTRODUCED_315_],1);
+constraint int_lin_eq(X_INTRODUCED_257_,[X_INTRODUCED_311_,X_INTRODUCED_314_,X_INTRODUCED_315_],0):: defines_var(X_INTRODUCED_311_);
+constraint int_lin_le(X_INTRODUCED_263_,[X_INTRODUCED_20_,X_INTRODUCED_313_,X_INTRODUCED_314_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_266_,[X_INTRODUCED_20_,X_INTRODUCED_313_,X_INTRODUCED_314_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_263_,[X_INTRODUCED_24_,X_INTRODUCED_313_,X_INTRODUCED_315_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_266_,[X_INTRODUCED_24_,X_INTRODUCED_313_,X_INTRODUCED_315_],2):: domain;
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_328_,X_INTRODUCED_329_,X_INTRODUCED_330_],1);
+constraint int_lin_eq(X_INTRODUCED_128_,[X_INTRODUCED_17_,X_INTRODUCED_328_,X_INTRODUCED_329_,X_INTRODUCED_330_],0);
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_792_,X_INTRODUCED_816_,X_INTRODUCED_824_],1);
+constraint int_lin_eq(X_INTRODUCED_161_,[X_INTRODUCED_277_,X_INTRODUCED_792_,X_INTRODUCED_816_,X_INTRODUCED_824_],0);
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_802_,X_INTRODUCED_818_,X_INTRODUCED_832_],1);
+constraint int_lin_eq(X_INTRODUCED_193_,[X_INTRODUCED_296_,X_INTRODUCED_802_,X_INTRODUCED_818_,X_INTRODUCED_832_],0);
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_810_,X_INTRODUCED_826_,X_INTRODUCED_834_],1);
+constraint int_lin_eq(X_INTRODUCED_224_,[X_INTRODUCED_313_,X_INTRODUCED_810_,X_INTRODUCED_826_,X_INTRODUCED_834_],0);
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_792_,X_INTRODUCED_802_,X_INTRODUCED_810_],1):: domain;
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_328_,X_INTRODUCED_818_,X_INTRODUCED_826_],1):: domain;
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_329_,X_INTRODUCED_816_,X_INTRODUCED_834_],1):: domain;
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_330_,X_INTRODUCED_824_,X_INTRODUCED_832_],1):: domain;
+constraint int_lin_le(X_INTRODUCED_377_,[X_INTRODUCED_818_,X_INTRODUCED_816_,X_INTRODUCED_373_,X_INTRODUCED_374_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_383_,[X_INTRODUCED_373_,X_INTRODUCED_375_,X_INTRODUCED_826_,X_INTRODUCED_824_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_385_,[X_INTRODUCED_818_,X_INTRODUCED_816_,X_INTRODUCED_373_,X_INTRODUCED_374_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_383_,[X_INTRODUCED_374_,X_INTRODUCED_375_,X_INTRODUCED_834_,X_INTRODUCED_832_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_392_,[X_INTRODUCED_373_,X_INTRODUCED_375_,X_INTRODUCED_826_,X_INTRODUCED_824_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_392_,[X_INTRODUCED_374_,X_INTRODUCED_375_,X_INTRODUCED_834_,X_INTRODUCED_832_],2):: domain;
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_410_,X_INTRODUCED_411_],1);
+constraint int_lin_eq(X_INTRODUCED_257_,[X_INTRODUCED_407_,X_INTRODUCED_410_,X_INTRODUCED_411_],0):: defines_var(X_INTRODUCED_407_);
+constraint int_lin_le(X_INTRODUCED_263_,[X_INTRODUCED_25_,X_INTRODUCED_17_,X_INTRODUCED_411_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_266_,[X_INTRODUCED_25_,X_INTRODUCED_17_,X_INTRODUCED_411_],2):: domain;
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_431_,X_INTRODUCED_432_],1);
+constraint int_lin_eq(X_INTRODUCED_257_,[X_INTRODUCED_428_,X_INTRODUCED_431_,X_INTRODUCED_432_],0):: defines_var(X_INTRODUCED_428_);
+constraint int_lin_le(X_INTRODUCED_287_,[X_INTRODUCED_18_,X_INTRODUCED_430_,X_INTRODUCED_431_],3):: domain;
+constraint int_lin_le(X_INTRODUCED_289_,[X_INTRODUCED_18_,X_INTRODUCED_430_,X_INTRODUCED_431_],3):: domain;
+constraint int_lin_le(X_INTRODUCED_287_,[X_INTRODUCED_26_,X_INTRODUCED_430_,X_INTRODUCED_432_],3):: domain;
+constraint int_lin_le(X_INTRODUCED_289_,[X_INTRODUCED_26_,X_INTRODUCED_430_,X_INTRODUCED_432_],3):: domain;
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_448_,X_INTRODUCED_449_],1);
+constraint int_lin_eq(X_INTRODUCED_257_,[X_INTRODUCED_445_,X_INTRODUCED_448_,X_INTRODUCED_449_],0):: defines_var(X_INTRODUCED_445_);
+constraint int_lin_le(X_INTRODUCED_287_,[X_INTRODUCED_19_,X_INTRODUCED_447_,X_INTRODUCED_448_],3):: domain;
+constraint int_lin_le(X_INTRODUCED_289_,[X_INTRODUCED_19_,X_INTRODUCED_447_,X_INTRODUCED_448_],3):: domain;
+constraint int_lin_le(X_INTRODUCED_287_,[X_INTRODUCED_27_,X_INTRODUCED_447_,X_INTRODUCED_449_],3):: domain;
+constraint int_lin_le(X_INTRODUCED_289_,[X_INTRODUCED_27_,X_INTRODUCED_447_,X_INTRODUCED_449_],3):: domain;
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_465_,X_INTRODUCED_466_],1);
+constraint int_lin_eq(X_INTRODUCED_257_,[X_INTRODUCED_462_,X_INTRODUCED_465_,X_INTRODUCED_466_],0):: defines_var(X_INTRODUCED_462_);
+constraint int_lin_le(X_INTRODUCED_263_,[X_INTRODUCED_20_,X_INTRODUCED_464_,X_INTRODUCED_465_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_266_,[X_INTRODUCED_20_,X_INTRODUCED_464_,X_INTRODUCED_465_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_263_,[X_INTRODUCED_28_,X_INTRODUCED_464_,X_INTRODUCED_466_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_266_,[X_INTRODUCED_28_,X_INTRODUCED_464_,X_INTRODUCED_466_],2):: domain;
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_479_,X_INTRODUCED_480_,X_INTRODUCED_481_],1);
+constraint int_lin_eq(X_INTRODUCED_128_,[X_INTRODUCED_17_,X_INTRODUCED_479_,X_INTRODUCED_480_,X_INTRODUCED_481_],0);
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_842_,X_INTRODUCED_864_,X_INTRODUCED_872_],1);
+constraint int_lin_eq(X_INTRODUCED_161_,[X_INTRODUCED_430_,X_INTRODUCED_842_,X_INTRODUCED_864_,X_INTRODUCED_872_],0);
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_850_,X_INTRODUCED_866_,X_INTRODUCED_880_],1);
+constraint int_lin_eq(X_INTRODUCED_193_,[X_INTRODUCED_447_,X_INTRODUCED_850_,X_INTRODUCED_866_,X_INTRODUCED_880_],0);
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_858_,X_INTRODUCED_874_,X_INTRODUCED_882_],1);
+constraint int_lin_eq(X_INTRODUCED_224_,[X_INTRODUCED_464_,X_INTRODUCED_858_,X_INTRODUCED_874_,X_INTRODUCED_882_],0);
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_842_,X_INTRODUCED_850_,X_INTRODUCED_858_],1):: domain;
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_479_,X_INTRODUCED_866_,X_INTRODUCED_874_],1):: domain;
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_480_,X_INTRODUCED_864_,X_INTRODUCED_882_],1):: domain;
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_481_,X_INTRODUCED_872_,X_INTRODUCED_880_],1):: domain;
+constraint int_lin_le(X_INTRODUCED_377_,[X_INTRODUCED_866_,X_INTRODUCED_864_,X_INTRODUCED_523_,X_INTRODUCED_524_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_383_,[X_INTRODUCED_523_,X_INTRODUCED_525_,X_INTRODUCED_874_,X_INTRODUCED_872_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_385_,[X_INTRODUCED_866_,X_INTRODUCED_864_,X_INTRODUCED_523_,X_INTRODUCED_524_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_383_,[X_INTRODUCED_524_,X_INTRODUCED_525_,X_INTRODUCED_882_,X_INTRODUCED_880_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_392_,[X_INTRODUCED_523_,X_INTRODUCED_525_,X_INTRODUCED_874_,X_INTRODUCED_872_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_392_,[X_INTRODUCED_524_,X_INTRODUCED_525_,X_INTRODUCED_882_,X_INTRODUCED_880_],2):: domain;
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_556_,X_INTRODUCED_557_],1);
+constraint int_lin_eq(X_INTRODUCED_257_,[X_INTRODUCED_553_,X_INTRODUCED_556_,X_INTRODUCED_557_],0):: defines_var(X_INTRODUCED_553_);
+constraint int_lin_le(X_INTRODUCED_263_,[X_INTRODUCED_25_,X_INTRODUCED_21_,X_INTRODUCED_557_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_266_,[X_INTRODUCED_25_,X_INTRODUCED_21_,X_INTRODUCED_557_],2):: domain;
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_577_,X_INTRODUCED_578_],1);
+constraint int_lin_eq(X_INTRODUCED_257_,[X_INTRODUCED_574_,X_INTRODUCED_577_,X_INTRODUCED_578_],0):: defines_var(X_INTRODUCED_574_);
+constraint int_lin_le(X_INTRODUCED_287_,[X_INTRODUCED_22_,X_INTRODUCED_576_,X_INTRODUCED_577_],3):: domain;
+constraint int_lin_le(X_INTRODUCED_289_,[X_INTRODUCED_22_,X_INTRODUCED_576_,X_INTRODUCED_577_],3):: domain;
+constraint int_lin_le(X_INTRODUCED_287_,[X_INTRODUCED_26_,X_INTRODUCED_576_,X_INTRODUCED_578_],3):: domain;
+constraint int_lin_le(X_INTRODUCED_289_,[X_INTRODUCED_26_,X_INTRODUCED_576_,X_INTRODUCED_578_],3):: domain;
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_594_,X_INTRODUCED_595_],1);
+constraint int_lin_eq(X_INTRODUCED_257_,[X_INTRODUCED_591_,X_INTRODUCED_594_,X_INTRODUCED_595_],0):: defines_var(X_INTRODUCED_591_);
+constraint int_lin_le(X_INTRODUCED_287_,[X_INTRODUCED_23_,X_INTRODUCED_593_,X_INTRODUCED_594_],3):: domain;
+constraint int_lin_le(X_INTRODUCED_289_,[X_INTRODUCED_23_,X_INTRODUCED_593_,X_INTRODUCED_594_],3):: domain;
+constraint int_lin_le(X_INTRODUCED_287_,[X_INTRODUCED_27_,X_INTRODUCED_593_,X_INTRODUCED_595_],3):: domain;
+constraint int_lin_le(X_INTRODUCED_289_,[X_INTRODUCED_27_,X_INTRODUCED_593_,X_INTRODUCED_595_],3):: domain;
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_611_,X_INTRODUCED_612_],1);
+constraint int_lin_eq(X_INTRODUCED_257_,[X_INTRODUCED_608_,X_INTRODUCED_611_,X_INTRODUCED_612_],0):: defines_var(X_INTRODUCED_608_);
+constraint int_lin_le(X_INTRODUCED_263_,[X_INTRODUCED_24_,X_INTRODUCED_610_,X_INTRODUCED_611_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_266_,[X_INTRODUCED_24_,X_INTRODUCED_610_,X_INTRODUCED_611_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_263_,[X_INTRODUCED_28_,X_INTRODUCED_610_,X_INTRODUCED_612_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_266_,[X_INTRODUCED_28_,X_INTRODUCED_610_,X_INTRODUCED_612_],2):: domain;
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_625_,X_INTRODUCED_626_,X_INTRODUCED_627_],1);
+constraint int_lin_eq(X_INTRODUCED_128_,[X_INTRODUCED_21_,X_INTRODUCED_625_,X_INTRODUCED_626_,X_INTRODUCED_627_],0);
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_890_,X_INTRODUCED_912_,X_INTRODUCED_920_],1);
+constraint int_lin_eq(X_INTRODUCED_161_,[X_INTRODUCED_576_,X_INTRODUCED_890_,X_INTRODUCED_912_,X_INTRODUCED_920_],0);
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_898_,X_INTRODUCED_914_,X_INTRODUCED_928_],1);
+constraint int_lin_eq(X_INTRODUCED_193_,[X_INTRODUCED_593_,X_INTRODUCED_898_,X_INTRODUCED_914_,X_INTRODUCED_928_],0);
+constraint int_lin_eq(X_INTRODUCED_123_,[X_INTRODUCED_906_,X_INTRODUCED_922_,X_INTRODUCED_930_],1);
+constraint int_lin_eq(X_INTRODUCED_224_,[X_INTRODUCED_610_,X_INTRODUCED_906_,X_INTRODUCED_922_,X_INTRODUCED_930_],0);
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_890_,X_INTRODUCED_898_,X_INTRODUCED_906_],1):: domain;
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_625_,X_INTRODUCED_914_,X_INTRODUCED_922_],1):: domain;
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_626_,X_INTRODUCED_912_,X_INTRODUCED_930_],1):: domain;
+constraint int_lin_le(X_INTRODUCED_123_,[X_INTRODUCED_627_,X_INTRODUCED_920_,X_INTRODUCED_928_],1):: domain;
+constraint int_lin_le(X_INTRODUCED_377_,[X_INTRODUCED_914_,X_INTRODUCED_912_,X_INTRODUCED_669_,X_INTRODUCED_670_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_383_,[X_INTRODUCED_669_,X_INTRODUCED_671_,X_INTRODUCED_922_,X_INTRODUCED_920_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_385_,[X_INTRODUCED_914_,X_INTRODUCED_912_,X_INTRODUCED_669_,X_INTRODUCED_670_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_383_,[X_INTRODUCED_670_,X_INTRODUCED_671_,X_INTRODUCED_930_,X_INTRODUCED_928_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_392_,[X_INTRODUCED_669_,X_INTRODUCED_671_,X_INTRODUCED_922_,X_INTRODUCED_920_],2):: domain;
+constraint int_lin_le(X_INTRODUCED_392_,[X_INTRODUCED_670_,X_INTRODUCED_671_,X_INTRODUCED_930_,X_INTRODUCED_928_],2):: domain;
+constraint int_lin_eq(X_INTRODUCED_705_,[X_INTRODUCED_700_,X_INTRODUCED_701_,X_INTRODUCED_702_,X_INTRODUCED_703_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_700_,X_INTRODUCED_706_],1);
+constraint int_lin_eq(X_INTRODUCED_712_,[X_INTRODUCED_701_,X_INTRODUCED_706_,X_INTRODUCED_707_],0):: defines_var(X_INTRODUCED_706_);
+constraint int_lin_eq(X_INTRODUCED_712_,[X_INTRODUCED_702_,X_INTRODUCED_707_,X_INTRODUCED_708_],0):: defines_var(X_INTRODUCED_707_);
+constraint int_lin_eq(X_INTRODUCED_712_,[X_INTRODUCED_703_,X_INTRODUCED_708_,X_INTRODUCED_709_],0):: defines_var(X_INTRODUCED_708_);
+constraint int_lin_le(X_INTRODUCED_266_,[X_INTRODUCED_17_,X_INTRODUCED_21_,X_INTRODUCED_706_],2);
+constraint int_lin_le(X_INTRODUCED_263_,[X_INTRODUCED_17_,X_INTRODUCED_21_,X_INTRODUCED_706_],2);
+constraint int_lin_le(X_INTRODUCED_289_,[X_INTRODUCED_17_,X_INTRODUCED_21_,X_INTRODUCED_700_],2);
+constraint int_lin_le(X_INTRODUCED_289_,[X_INTRODUCED_18_,X_INTRODUCED_22_,X_INTRODUCED_707_],3);
+constraint int_lin_le(X_INTRODUCED_287_,[X_INTRODUCED_18_,X_INTRODUCED_22_,X_INTRODUCED_707_],3);
+constraint int_lin_le(X_INTRODUCED_729_,[X_INTRODUCED_18_,X_INTRODUCED_22_,X_INTRODUCED_701_],3);
+constraint int_lin_le(X_INTRODUCED_289_,[X_INTRODUCED_19_,X_INTRODUCED_23_,X_INTRODUCED_708_],3);
+constraint int_lin_le(X_INTRODUCED_287_,[X_INTRODUCED_19_,X_INTRODUCED_23_,X_INTRODUCED_708_],3);
+constraint int_lin_le(X_INTRODUCED_729_,[X_INTRODUCED_19_,X_INTRODUCED_23_,X_INTRODUCED_702_],3);
+constraint int_lin_le(X_INTRODUCED_266_,[X_INTRODUCED_20_,X_INTRODUCED_24_,X_INTRODUCED_709_],2);
+constraint int_lin_le(X_INTRODUCED_263_,[X_INTRODUCED_20_,X_INTRODUCED_24_,X_INTRODUCED_709_],2);
+constraint int_lin_le(X_INTRODUCED_289_,[X_INTRODUCED_20_,X_INTRODUCED_24_,X_INTRODUCED_703_],2);
+constraint int_lin_eq(X_INTRODUCED_705_,[X_INTRODUCED_746_,X_INTRODUCED_747_,X_INTRODUCED_748_,X_INTRODUCED_749_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_746_,X_INTRODUCED_751_],1);
+constraint int_lin_eq(X_INTRODUCED_712_,[X_INTRODUCED_747_,X_INTRODUCED_751_,X_INTRODUCED_752_],0):: defines_var(X_INTRODUCED_751_);
+constraint int_lin_eq(X_INTRODUCED_712_,[X_INTRODUCED_748_,X_INTRODUCED_752_,X_INTRODUCED_753_],0):: defines_var(X_INTRODUCED_752_);
+constraint int_lin_eq(X_INTRODUCED_712_,[X_INTRODUCED_749_,X_INTRODUCED_753_,X_INTRODUCED_754_],0):: defines_var(X_INTRODUCED_753_);
+constraint int_lin_le(X_INTRODUCED_266_,[X_INTRODUCED_21_,X_INTRODUCED_25_,X_INTRODUCED_751_],2);
+constraint int_lin_le(X_INTRODUCED_263_,[X_INTRODUCED_21_,X_INTRODUCED_25_,X_INTRODUCED_751_],2);
+constraint int_lin_le(X_INTRODUCED_289_,[X_INTRODUCED_21_,X_INTRODUCED_25_,X_INTRODUCED_746_],2);
+constraint int_lin_le(X_INTRODUCED_289_,[X_INTRODUCED_22_,X_INTRODUCED_26_,X_INTRODUCED_752_],3);
+constraint int_lin_le(X_INTRODUCED_287_,[X_INTRODUCED_22_,X_INTRODUCED_26_,X_INTRODUCED_752_],3);
+constraint int_lin_le(X_INTRODUCED_729_,[X_INTRODUCED_22_,X_INTRODUCED_26_,X_INTRODUCED_747_],3);
+constraint int_lin_le(X_INTRODUCED_289_,[X_INTRODUCED_23_,X_INTRODUCED_27_,X_INTRODUCED_753_],3);
+constraint int_lin_le(X_INTRODUCED_287_,[X_INTRODUCED_23_,X_INTRODUCED_27_,X_INTRODUCED_753_],3);
+constraint int_lin_le(X_INTRODUCED_729_,[X_INTRODUCED_23_,X_INTRODUCED_27_,X_INTRODUCED_748_],3);
+constraint int_lin_le(X_INTRODUCED_266_,[X_INTRODUCED_24_,X_INTRODUCED_28_,X_INTRODUCED_754_],2);
+constraint int_lin_le(X_INTRODUCED_263_,[X_INTRODUCED_24_,X_INTRODUCED_28_,X_INTRODUCED_754_],2);
+constraint int_lin_le(X_INTRODUCED_289_,[X_INTRODUCED_24_,X_INTRODUCED_28_,X_INTRODUCED_749_],2);
+constraint int_lin_le(X_INTRODUCED_798_,[X_INTRODUCED_795_,X_INTRODUCED_796_],-1):: domain;
+constraint int_lin_le(X_INTRODUCED_798_,[X_INTRODUCED_804_,X_INTRODUCED_805_],-1):: domain;
+constraint int_lin_le(X_INTRODUCED_798_,[X_INTRODUCED_812_,X_INTRODUCED_813_],-1):: domain;
+constraint int_lin_le(X_INTRODUCED_798_,[X_INTRODUCED_820_,X_INTRODUCED_821_],-1):: domain;
+constraint int_lin_le(X_INTRODUCED_798_,[X_INTRODUCED_828_,X_INTRODUCED_829_],-1):: domain;
+constraint int_lin_le(X_INTRODUCED_798_,[X_INTRODUCED_836_,X_INTRODUCED_837_],-1):: domain;
+constraint int_lin_le(X_INTRODUCED_798_,[X_INTRODUCED_844_,X_INTRODUCED_845_],-1):: domain;
+constraint int_lin_le(X_INTRODUCED_798_,[X_INTRODUCED_852_,X_INTRODUCED_853_],-1):: domain;
+constraint int_lin_le(X_INTRODUCED_798_,[X_INTRODUCED_860_,X_INTRODUCED_861_],-1):: domain;
+constraint int_lin_le(X_INTRODUCED_798_,[X_INTRODUCED_868_,X_INTRODUCED_869_],-1):: domain;
+constraint int_lin_le(X_INTRODUCED_798_,[X_INTRODUCED_876_,X_INTRODUCED_877_],-1):: domain;
+constraint int_lin_le(X_INTRODUCED_798_,[X_INTRODUCED_884_,X_INTRODUCED_885_],-1):: domain;
+constraint int_lin_le(X_INTRODUCED_798_,[X_INTRODUCED_892_,X_INTRODUCED_893_],-1):: domain;
+constraint int_lin_le(X_INTRODUCED_798_,[X_INTRODUCED_900_,X_INTRODUCED_901_],-1):: domain;
+constraint int_lin_le(X_INTRODUCED_798_,[X_INTRODUCED_908_,X_INTRODUCED_909_],-1):: domain;
+constraint int_lin_le(X_INTRODUCED_798_,[X_INTRODUCED_916_,X_INTRODUCED_917_],-1):: domain;
+constraint int_lin_le(X_INTRODUCED_798_,[X_INTRODUCED_924_,X_INTRODUCED_925_],-1):: domain;
+constraint int_lin_le(X_INTRODUCED_798_,[X_INTRODUCED_932_,X_INTRODUCED_933_],-1):: domain;
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_840_,X_INTRODUCED_795_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_792_,X_INTRODUCED_796_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_848_,X_INTRODUCED_804_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_802_,X_INTRODUCED_805_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_856_,X_INTRODUCED_812_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_810_,X_INTRODUCED_813_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_816_,X_INTRODUCED_820_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_818_,X_INTRODUCED_821_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_824_,X_INTRODUCED_828_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_826_,X_INTRODUCED_829_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_832_,X_INTRODUCED_836_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_834_,X_INTRODUCED_837_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_840_,X_INTRODUCED_844_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_842_,X_INTRODUCED_845_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_848_,X_INTRODUCED_852_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_850_,X_INTRODUCED_853_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_856_,X_INTRODUCED_860_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_858_,X_INTRODUCED_861_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_864_,X_INTRODUCED_868_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_866_,X_INTRODUCED_869_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_872_,X_INTRODUCED_876_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_874_,X_INTRODUCED_877_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_880_,X_INTRODUCED_884_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_882_,X_INTRODUCED_885_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_888_,X_INTRODUCED_892_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_890_,X_INTRODUCED_893_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_896_,X_INTRODUCED_900_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_898_,X_INTRODUCED_901_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_904_,X_INTRODUCED_908_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_906_,X_INTRODUCED_909_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_912_,X_INTRODUCED_916_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_914_,X_INTRODUCED_917_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_920_,X_INTRODUCED_924_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_922_,X_INTRODUCED_925_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_928_,X_INTRODUCED_932_],1);
+constraint int_lin_eq(X_INTRODUCED_254_,[X_INTRODUCED_930_,X_INTRODUCED_933_],1);
+constraint int_lin_eq([1,2,3,4,-1],[X_INTRODUCED_17_,X_INTRODUCED_18_,X_INTRODUCED_19_,X_INTRODUCED_20_,objective],0):: defines_var(objective);
+solve :: int_search(X_INTRODUCED_787_,input_order,indomain_min,complete) minimize objective;

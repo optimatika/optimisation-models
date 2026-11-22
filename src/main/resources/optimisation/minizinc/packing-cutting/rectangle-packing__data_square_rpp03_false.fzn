@@ -1,0 +1,40 @@
+% minizinc-benchmarks/rectangle-packing: rect_packing.mzn data_square/rpp03_false.dzn
+% Compiled with MiniZinc 2.11.0 and its linear library (-Glinear)
+%
+%------------------------------------------------------------------------------%
+% vim: ts=4 sw=4 et wm=0 tw=0
+%------------------------------------------------------------------------------%
+% Copyright (C) 2009 The University of Melbourne and NICTA.
+% See the file COPYING for license information.
+%------------------------------------------------------------------------------%
+% A model for the rectangle (square) packing problem (RPP).
+%
+% A RPP of size N consists of N square of size 1x1, 2x2, 3x3, ..., NxN. The 
+% optimised variant asked for the smallest rectangle wrt. its area where all
+% squares can be placed without overlapping in this rectangle.
+%------------------------------------------------------------------------------%
+
+array [1..2] of int: X_INTRODUCED_100_ = [-1,-1];
+array [1..2] of int: X_INTRODUCED_106_ = [-1,1];
+var 0..1: X_INTRODUCED_50_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_101_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_103_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_107_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_116_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_119_ ::var_is_introduced ;
+var 0..1: X_INTRODUCED_123_;
+var 0..1: X_INTRODUCED_124_;
+var 0..1: X_INTRODUCED_125_;
+var 0..1: X_INTRODUCED_126_;
+var 0..1: X_INTRODUCED_127_;
+array [1..3] of var int: Y:: output_array([1..3]) = [0,X_INTRODUCED_119_,0];
+array [1..6] of var int: X_INTRODUCED_67_ ::var_is_introduced  = [15,3,0,X_INTRODUCED_119_,0,3];
+constraint int_lin_le(X_INTRODUCED_106_,[X_INTRODUCED_101_,X_INTRODUCED_103_],0);
+constraint int_lin_le(X_INTRODUCED_100_,[X_INTRODUCED_103_,X_INTRODUCED_107_],-1);
+constraint int_lin_le(X_INTRODUCED_106_,[X_INTRODUCED_50_,X_INTRODUCED_116_],0);
+constraint int_lin_le(X_INTRODUCED_100_,[X_INTRODUCED_116_,X_INTRODUCED_119_],-1);
+constraint int_lin_eq([1,1,1,1,1,1],[X_INTRODUCED_101_,X_INTRODUCED_123_,X_INTRODUCED_124_,X_INTRODUCED_125_,X_INTRODUCED_126_,X_INTRODUCED_127_],1);
+constraint int_lin_eq([1,2,3,4,5],[X_INTRODUCED_123_,X_INTRODUCED_124_,X_INTRODUCED_125_,X_INTRODUCED_126_,X_INTRODUCED_127_],3);
+constraint int_lin_eq([-1,-1,-1,1],[X_INTRODUCED_125_,X_INTRODUCED_126_,X_INTRODUCED_127_,X_INTRODUCED_107_],0);
+constraint int_lin_eq([1,1],[X_INTRODUCED_50_,X_INTRODUCED_119_],1);
+solve :: int_search(X_INTRODUCED_67_,input_order,indomain_min,complete) satisfy;
