@@ -2,16 +2,20 @@
 # solution – objective value. Status is optimal, feasible (a solution, not proven optimal), solved (a solution
 # to a satisfaction problem), unsat or unknown.
 # Computed by HiGHS (through MiniZinc, on the original model) with a 30 s time limit, so "feasible" and
-# "unknown" only mean HiGHS did not get further in that time.
+# "unknown" only mean HiGHS did not get further in that time. Then checked against the MiniZinc Challenge
+# results (2010–2026): where a model is a challenge instance and a challenge solver proved an optimum, that
+# optimum is here – but only once CP-SAT or SCIP had proved, or reached, the same value on the FlatZinc file
+# itself. A challenge instance can be another version of the model than the one compiled here. Every unsat
+# is proven by CP-SAT as well – HiGHS 1.16 also called hrc__exp2-1-4795 unsat, and it is not.
 2DBinPacking__class_10_Class10_60_9 optimal 9
 2DBinPacking__class_1_Class1_20_4 optimal 6
 2DBinPacking__class_3_Class3_40_5 optimal 12
 2DBinPacking__class_7_Class7_20_9 optimal 6
 2DBinPacking__class_9_Class9_40_8 optimal 26
 alpha__alpha solved
-amaze__2012-03-15 unknown
+amaze__2012-03-15 optimal 1429
 amaze__2012-04-27 unknown
-amaze__2012-07-04 unknown
+amaze__2012-07-04 optimal 481
 amaze__2012-07-27 unknown
 amaze__amaze optimal 12
 areas__3_3_3 solved
@@ -32,9 +36,9 @@ bus_scheduling__t1 optimal 7
 bus_scheduling__t2 optimal 19
 cargo__challenge01_0s_1913 optimal 0
 cargo__challenge02_0s_1139 optimal 25
-cargo__challenge04_1s_626 feasible 21980
+cargo__challenge04_1s_626 optimal 714
 cargo__challenge05_1s_954 optimal 2883
-cargo__challenge06_1s_3927 unknown
+cargo__challenge06_1s_3927 optimal 3394
 carpet-cutting__mzn_rnd_test.01 optimal 621
 carpet-cutting__mzn_rnd_test.02 optimal 919
 carpet-cutting__mzn_rnd_test.11 optimal 963
@@ -50,7 +54,7 @@ carseq__carseq_set_1_car_57 solved
 carseq__carseq_set_1_car_6 unknown
 carseq__carseq_set_1_car_62 solved
 carseq__test_car_test_1 solved
-celar__CELAR6-SUB0 feasible 234
+celar__CELAR6-SUB0 optimal 159
 celar__CELAR6-SUB2 feasible 6200
 celar__CELAR6-SUB3 feasible 13229
 celar__CELAR6-SUB4 feasible 24542
@@ -58,13 +62,13 @@ celar__CELAR7-SUB3 feasible 5573422
 city-position__city-4-04 optimal 31
 city-position__city-5-05 optimal 2850
 city-position__city-5-06 optimal 3493
-city-position__city-7-04 feasible 3100
+city-position__city-7-04 optimal 2930
 city-position__city-8-06 feasible 62801
 community-detection__dolphin.s124.k4 unsat
 community-detection__mexican.s26.k4 feasible 18
-community-detection__Sampson.s10.k3 feasible 2
+community-detection__Sampson.s10.k3 optimal 10
 community-detection__Sampson.s20.k4 feasible 4
-community-detection__Strike.s2.k8 feasible 35
+community-detection__Strike.s2.k8 optimal 75
 costas-array__15 unknown
 costas-array__17 unknown
 costas-array__20 unknown
@@ -78,23 +82,23 @@ cutstock__type13_TEST1 optimal 63
 cutstock__type13_TEST5 optimal 67
 cutstock__type14_TEST6 feasible 733
 cutstock__type15_TEST7 optimal 171
-cvrp__simple2 feasible 34
-cyclic-rcpsp__easy_3 feasible 1942
+cvrp__simple2 optimal 34
+cyclic-rcpsp__easy_3 optimal 1920
 cyclic-rcpsp__hard_6 feasible 1433
-cyclic-rcpsp__medium_1 feasible 585
+cyclic-rcpsp__medium_1 optimal 585
 cyclic-rcpsp__medium_2 optimal 516
-cyclic-rcpsp__medium_3 feasible 3132
+cyclic-rcpsp__medium_3 optimal 3132
 debruijn_binary__02_03 solved
-depot-placement__att48_6 feasible 16013
+depot-placement__att48_6 optimal 13995
 depot-placement__rat99_4 optimal 105
 depot-placement__st70_4 optimal 145
 depot-placement__ulysses16_4 feasible 2886
 depot-placement__ulysses22_6 feasible 5501
 diameterc-mst__c_v15_a105_d4 optimal 346
-diameterc-mst__c_v20_a190_d5 feasible 448
+diameterc-mst__c_v20_a190_d5 optimal 414
 diameterc-mst__s_v20_a50_d4 optimal 442
-diameterc-mst__s_v20_a50_d5 feasible 381
-diameterc-mst__s_v40_a100_d5 feasible 851
+diameterc-mst__s_v20_a50_d5 optimal 381
+diameterc-mst__s_v40_a100_d5 optimal 729
 evilshop__js-brs2-5 optimal 77406
 evilshop__js-brs2-7 feasible 87494
 evilshop__js-setg2-10 feasible 64311
@@ -110,21 +114,21 @@ fillomino__11 solved
 fillomino__16 solved
 fillomino__20 solved
 fillomino__7x7_0 unknown
-filters__ar_1_2 feasible 18
-filters__dct_1_1 feasible 34
+filters__ar_1_2 optimal 18
+filters__dct_1_1 optimal 34
 filters__dct_4_4 feasible 11
 filters__fir16_1_2 optimal 19
 filters__fir_1_1 optimal 18
 flexible-jobshop__easy01 optimal 253
 flexible-jobshop__med10 feasible 954
-freepizza__pizza6 feasible 220
-gbac__reduced_UD10-gbac feasible 1030
+freepizza__pizza6 optimal 210
+gbac__reduced_UD10-gbac optimal 1015
 gbac__reduced_UD4-gbac optimal 949
-gbac__reduced_UD6-gbac feasible 248
+gbac__reduced_UD6-gbac optimal 225
 gbac__toy-gbac optimal 191
 gfd-schedule__n10f2d10m10k3 optimal 3
 gfd-schedule__n25f5d20m10k3 optimal 5
-gfd-schedule__n30f3d30m7k4 feasible 217
+gfd-schedule__n30f3d30m7k4 optimal 8
 ghoulomb__3-3-3 optimal 3
 ghoulomb__3-4-6 optimal 6
 golfers__golfers_2_2_3 solved
@@ -138,16 +142,16 @@ grid-colouring__10_5 optimal 3
 grid-colouring__4_11 optimal 3
 grid-colouring__4_8 optimal 3
 grid-colouring__5_6 optimal 3
-grid-colouring__7_8 feasible 3
+grid-colouring__7_8 optimal 3
 hrc__exp1-0-10 optimal 8
 hrc__exp1-1-5670 optimal 2
 hrc__exp1-1-945 optimal 11
-hrc__exp2-1-4795 unsat
-hrc__exp2-1-5180 feasible 5
+hrc__exp2-1-4795 optimal 5
+hrc__exp2-1-5180 optimal 5
 is__A3PZaPjnUz optimal 103936
 is__jZ9pQqRxJ2 optimal 210944
-java-auto-gen__binpack_11 feasible 3
-java-auto-gen__pizza_8_3 feasible 21
+java-auto-gen__binpack_11 optimal 3
+java-auto-gen__pizza_8_3 optimal 20
 java-auto-gen__plusexample_6 optimal -43
 java-auto-gen__projplan1_15_15 optimal 5
 java-auto-gen__routing_5 feasible 69
@@ -260,9 +264,9 @@ open_stacks__tiny optimal 3
 open_stacks__wbo_30_15_1 feasible 10
 open_stacks__wbop_20_10_1 optimal 8
 open_stacks__wbop_30_10_1 feasible 14
-openshop__gp10-4 feasible 1335
-openshop__j7per10-1 feasible 1008
-openshop__j8per0-2 feasible 1073
+openshop__gp10-4 optimal 1077
+openshop__j7per10-1 optimal 1000
+openshop__j8per0-2 optimal 1052
 opt-cryptanalysis__r4 optimal 12
 opt-cryptanalysis__r5 optimal 20
 p1f__4 optimal 28
@@ -272,7 +276,7 @@ p1f__9 unsat
 parity-learning__44_22_5.2 optimal 2
 parity-learning__44_22_5.3 optimal 2
 parity-learning__48_24_6.3 unknown
-parity-learning__52_26_6.1 feasible 6
+parity-learning__52_26_6.1 optimal 5
 parity-learning__52_26_6.3 optimal 1
 pattern-set-mining__anneal-k1 optimal 494
 pentominoes__01 solved
@@ -286,7 +290,7 @@ prize-collecting__32-4-8-9 optimal 77
 project-planning__ProjectPlannertest_12_6 feasible 17
 project-planning__ProjectPlannertest_13_8 feasible 25
 project-planning__ProjectPlannertest_15_7 feasible 57
-project-planning__ProjectPlannertest_16_8 feasible 44
+project-planning__ProjectPlannertest_16_8 optimal 29
 project-planning__ProjectPlannertest_17_9 feasible 48
 prop_stress__0100 unsat
 QCP__qcp-10-67-0_ext solved
@@ -328,9 +332,9 @@ rectangle-packing__data_square_rpp03_true solved
 rectangle-packing__data_square_rpp10_true solved
 rectangle-packing__data_square_rpp15_false solved
 rectangle-packing__data_square_rpp25_true unknown
-road-cons__road_11 feasible 30005677
+road-cons__road_11 optimal 5020
 road-cons__road_8 feasible 5875
-road-cons__road_9 feasible 7005683
+road-cons__road_9 optimal 3206
 schur_numbers__10-3 solved
 schur_numbers__5-3 solved
 schur_numbers__7-3 solved
@@ -350,7 +354,7 @@ shortest_path__08 optimal 144
 shortest_path__09 optimal 549
 slow_convergence__0200 solved
 smelt__smelt_2 optimal 69
-smelt__smelt_3 feasible 3137
+smelt__smelt_3 optimal 1117
 smelt__smelt_4 optimal 1043
 solbat__sb_12_12_5_0 solved
 solbat__sb_12_12_5_1 unknown
@@ -359,13 +363,13 @@ solbat__sb_12_12_6_1 solved
 solbat__sb_12_12_6_4 solved
 spot5__1502 optimal 28042
 spot5__29 optimal 8059
-spot5__503 feasible 12122
-spot5__54 feasible 37
+spot5__503 optimal 11113
+spot5__54 optimal 37
 steiner-triples__07 solved
 steiner-triples__09 unknown
-still-life-wastage__09 feasible 30
-still-life-wastage__10 feasible 36
-still-life-wastage__11 feasible 20
+still-life-wastage__09 optimal 43
+still-life-wastage__10 optimal 54
+still-life-wastage__11 optimal 64
 still-life-wastage__12 unknown
 still-life-wastage__13 unknown
 still_life2__still_life_5 optimal 16
@@ -378,15 +382,15 @@ still_life__4x4 optimal 8
 still_life__8x8 feasible 36
 still_life__9x9 feasible 24
 stochastic-fjsp__fjsp-a1-s2_fjsp-t15-j3-m3-a1_det optimal 108
-stochastic-fjsp__fjsp-a1-s3_fjsp-t20-j4-m3-a1_det feasible 217
+stochastic-fjsp__fjsp-a1-s3_fjsp-t20-j4-m3-a1_det optimal 207
 stochastic-fjsp__fjsp-a1-s4_fjsp-t8-j2-m3-a1_det optimal 242
 stochastic-fjsp__fjsp-a1-s5_fjsp-t8-j2-m3-a1_det optimal 328
 stochastic-fjsp__fjsp-a1-s6_fjsp-t8-j2-m3-a1_det optimal 348
-stochastic-vrp__vrp-s2-v2-c7_vrp-v2-c7_det feasible 160
-stochastic-vrp__vrp-s3-v2-c6_vrp-v2-c6_det feasible 194
-stochastic-vrp__vrp-s3-v2-c7_vrp-v2-c7_det feasible 232
-stochastic-vrp__vrp-s4-v2-c6_vrp-v2-c6_det feasible 221
-stochastic-vrp__vrp-s5-v2-c8_vrp-v2-c8_det feasible 389
+stochastic-vrp__vrp-s2-v2-c7_vrp-v2-c7_det optimal 160
+stochastic-vrp__vrp-s3-v2-c6_vrp-v2-c6_det optimal 194
+stochastic-vrp__vrp-s3-v2-c7_vrp-v2-c7_det optimal 230
+stochastic-vrp__vrp-s4-v2-c6_vrp-v2-c6_det optimal 221
+stochastic-vrp__vrp-s5-v2-c8_vrp-v2-c8_det optimal 330
 sugiyama__g3_7_7_7 optimal 4
 sugiyama__g4_7_7_7_3 feasible 7
 sugiyama__g4_7_7_7_7 feasible 15
@@ -403,10 +407,10 @@ talent_scheduling__medium_film103 feasible 969
 talent_scheduling__medium_film118 feasible 824
 talent_scheduling__medium_MobStory feasible 1063
 tc-graph-color__k10_31 optimal 427
-tc-graph-color__k10_34 unknown
+tc-graph-color__k10_34 optimal 433
 tc-graph-color__k10_41 unknown
-tc-graph-color__k5_05 feasible 275
-tc-graph-color__k9_39 feasible 485
+tc-graph-color__k5_05 optimal 273
+tc-graph-color__k9_39 optimal 481
 template_design__catfood_2 optimal 418
 template_design__catfood_3 optimal 408
 template_design__herbs_2 unknown

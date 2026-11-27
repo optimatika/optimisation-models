@@ -10,13 +10,15 @@ The models and data are under the MIT license, see [LICENSE](LICENSE). A few mod
 
 [MINIZINC.solu](MINIZINC.solu) has a status – and objective value – per model, from HiGHS with a 30 s time limit. "solved" is a solution to a satisfaction problem. "feasible" (a solution, not proven optimal) and "unknown" only mean HiGHS did not get further in that time.
 
+Then checked against the [MiniZinc Challenge](https://www.minizinc.org/challenge/) results, 2010–2026 – each year's per-instance results are at `https://www.minizinc.org/challenge/<year>/results.json`. 185 of the models are challenge instances. Where a challenge solver proved an optimum, that optimum is used – once CP-SAT or SCIP proved, or reached, the same value on the FlatZinc file here, as a challenge instance can be another version of the model. That made 48 more models optimal, and the challenge agrees with all 88 of HiGHS's optimal values that are challenge instances. One, `gfd-schedule__n30f3d30m7k4`, is another version: CP-SAT and HiGHS both prove 8 here, the challenge's optimum is 1 – so it is optimal 8. Nine more have a proven challenge optimum that nothing has reached here yet, so they are still feasible or unknown. HiGHS 1.16 also called `hrc__exp2-1-4795` unsat – it has an optimum, 5. The other unsat ones are proven unsat by CP-SAT too.
+
 | Status | Models |
 |:-------|-------:|
-| optimal | 201 |
+| optimal | 250 |
 | solved | 91 |
-| feasible | 105 |
-| unsat | 13 |
-| unknown | 39 |
+| feasible | 61 |
+| unsat | 12 |
+| unknown | 35 |
 
 ## Categories
 
@@ -47,9 +49,9 @@ One folder per category, by what the problem is about, each with a list of its m
 | 2DBinPacking__class_7_Class7_20_9 | packing-cutting | 419 | 419 | 495 | min | optimal 6 |
 | 2DBinPacking__class_9_Class9_40_8 | packing-cutting | 1,639 | 1,639 | 1,795 | min | optimal 26 |
 | alpha__alpha | puzzle | 702 | 702 | 98 | sat | solved |
-| amaze__2012-03-15 | puzzle | 2,153 | 2,153 | 2,180 | min | unknown |
+| amaze__2012-03-15 | puzzle | 2,153 | 2,153 | 2,180 | min | optimal 1429 |
 | amaze__2012-04-27 | puzzle | 1,375 | 1,375 | 1,206 | min | unknown |
-| amaze__2012-07-04 | puzzle | 1,394 | 1,394 | 1,225 | min | unknown |
+| amaze__2012-07-04 | puzzle | 1,394 | 1,394 | 1,225 | min | optimal 481 |
 | amaze__2012-07-27 | puzzle | 1,898 | 1,898 | 1,803 | min | unknown |
 | amaze__amaze | puzzle | 295 | 295 | 267 | min | optimal 12 |
 | areas__3_3_3 | puzzle | 48 | 48 | 85 | sat | solved |
@@ -70,9 +72,9 @@ One folder per category, by what the problem is about, each with a list of its m
 | bus_scheduling__t2 | rostering-timetabling | 3,016 | 3,016 | 107 | min | optimal 19 |
 | cargo__challenge01_0s_1913 | scheduling | 4,240 | 4,240 | 6,929 | min | optimal 0 |
 | cargo__challenge02_0s_1139 | scheduling | 4,482 | 4,482 | 7,360 | min | optimal 25 |
-| cargo__challenge04_1s_626 | scheduling | 4,206 | 4,206 | 6,880 | min | feasible 21980 |
+| cargo__challenge04_1s_626 | scheduling | 4,206 | 4,206 | 6,880 | min | optimal 714 |
 | cargo__challenge05_1s_954 | scheduling | 4,646 | 4,646 | 7,686 | min | optimal 2883 |
-| cargo__challenge06_1s_3927 | scheduling | 5,902 | 5,902 | 9,800 | min | unknown |
+| cargo__challenge06_1s_3927 | scheduling | 5,902 | 5,902 | 9,800 | min | optimal 3394 |
 | carpet-cutting__mzn_rnd_test.01 | packing-cutting | 942 | 942 | 2,046 | min | optimal 621 |
 | carpet-cutting__mzn_rnd_test.02 | packing-cutting | 583 | 583 | 1,258 | min | optimal 919 |
 | carpet-cutting__mzn_rnd_test.11 | packing-cutting | 768 | 768 | 1,656 | min | optimal 963 |
@@ -88,7 +90,7 @@ One folder per category, by what the problem is about, each with a list of its m
 | carseq__carseq_set_1_car_6 | sequencing | 2,900 | 2,900 | 1,697 | sat | unknown |
 | carseq__carseq_set_1_car_62 | sequencing | 7,200 | 7,200 | 3,404 | sat | solved |
 | carseq__test_car_test_1 | sequencing | 66 | 66 | 76 | sat | solved |
-| celar__CELAR6-SUB0 | assignment-location | 2,603 | 2,603 | 2,470 | min | feasible 234 |
+| celar__CELAR6-SUB0 | assignment-location | 2,603 | 2,603 | 2,470 | min | optimal 159 |
 | celar__CELAR6-SUB2 | assignment-location | 3,575 | 3,575 | 4,076 | min | feasible 6200 |
 | celar__CELAR6-SUB3 | assignment-location | 4,169 | 4,169 | 4,848 | min | feasible 13229 |
 | celar__CELAR6-SUB4 | assignment-location | 4,829 | 4,829 | 5,512 | min | feasible 24542 |
@@ -96,13 +98,13 @@ One folder per category, by what the problem is about, each with a list of its m
 | city-position__city-4-04 | assignment-location | 57 | 57 | 94 | min | optimal 31 |
 | city-position__city-5-05 | assignment-location | 144 | 144 | 248 | min | optimal 2850 |
 | city-position__city-5-06 | assignment-location | 162 | 162 | 282 | min | optimal 3493 |
-| city-position__city-7-04 | assignment-location | 258 | 258 | 452 | min | feasible 3100 |
+| city-position__city-7-04 | assignment-location | 258 | 258 | 452 | min | optimal 2930 |
 | city-position__city-8-06 | assignment-location | 435 | 435 | 772 | min | feasible 62801 |
 | community-detection__dolphin.s124.k4 | graph | 698 | 698 | 1,078 | max | unsat |
 | community-detection__mexican.s26.k4 | graph | 1,101 | 1,101 | 1,725 | max | feasible 18 |
-| community-detection__Sampson.s10.k3 | graph | 693 | 693 | 1,095 | max | feasible 2 |
+| community-detection__Sampson.s10.k3 | graph | 693 | 693 | 1,095 | max | optimal 10 |
 | community-detection__Sampson.s20.k4 | graph | 494 | 494 | 756 | max | feasible 4 |
-| community-detection__Strike.s2.k8 | graph | 992 | 992 | 1,388 | max | feasible 35 |
+| community-detection__Strike.s2.k8 | graph | 992 | 992 | 1,388 | max | optimal 75 |
 | costas-array__15 | design | 3,259 | 3,259 | 804 | sat | unknown |
 | costas-array__17 | design | 4,764 | 4,764 | 1,046 | sat | unknown |
 | costas-array__20 | design | 7,794 | 7,794 | 1,469 | sat | unknown |
@@ -116,23 +118,23 @@ One folder per category, by what the problem is about, each with a list of its m
 | cutstock__type13_TEST5 | packing-cutting | 1,002 | 1,002 | 102 | min | optimal 67 |
 | cutstock__type14_TEST6 | packing-cutting | 9,197 | 9,197 | 847 | min | feasible 733 |
 | cutstock__type15_TEST7 | packing-cutting | 4,159 | 4,159 | 219 | min | optimal 171 |
-| cvrp__simple2 | routing | 867 | 867 | 2,658 | min | feasible 34 |
-| cyclic-rcpsp__easy_3 | scheduling | 3,464 | 3,464 | 3,145 | min | feasible 1942 |
+| cvrp__simple2 | routing | 867 | 867 | 2,658 | min | optimal 34 |
+| cyclic-rcpsp__easy_3 | scheduling | 3,464 | 3,464 | 3,145 | min | optimal 1920 |
 | cyclic-rcpsp__hard_6 | scheduling | 2,693 | 2,693 | 2,501 | min | feasible 1433 |
-| cyclic-rcpsp__medium_1 | scheduling | 1,143 | 1,143 | 1,219 | min | feasible 585 |
+| cyclic-rcpsp__medium_1 | scheduling | 1,143 | 1,143 | 1,219 | min | optimal 585 |
 | cyclic-rcpsp__medium_2 | scheduling | 1,013 | 1,013 | 1,100 | min | optimal 516 |
-| cyclic-rcpsp__medium_3 | scheduling | 3,977 | 3,977 | 7,911 | min | feasible 3132 |
+| cyclic-rcpsp__medium_3 | scheduling | 3,977 | 3,977 | 7,911 | min | optimal 3132 |
 | debruijn_binary__02_03 | design | 97 | 97 | 57 | sat | solved |
-| depot-placement__att48_6 | assignment-location | 3,546 | 3,546 | 495 | min | feasible 16013 |
+| depot-placement__att48_6 | assignment-location | 3,546 | 3,546 | 495 | min | optimal 13995 |
 | depot-placement__rat99_4 | assignment-location | 1,850 | 1,850 | 279 | min | optimal 105 |
 | depot-placement__st70_4 | assignment-location | 1,850 | 1,850 | 279 | min | optimal 145 |
 | depot-placement__ulysses16_4 | assignment-location | 1,850 | 1,850 | 279 | min | feasible 2886 |
 | depot-placement__ulysses22_6 | assignment-location | 3,546 | 3,546 | 495 | min | feasible 5501 |
 | diameterc-mst__c_v15_a105_d4 | graph | 1,302 | 1,302 | 3,311 | min | optimal 346 |
-| diameterc-mst__c_v20_a190_d5 | graph | 2,780 | 2,780 | 7,573 | min | feasible 448 |
+| diameterc-mst__c_v20_a190_d5 | graph | 2,780 | 2,780 | 7,573 | min | optimal 414 |
 | diameterc-mst__s_v20_a50_d4 | graph | 1,121 | 1,121 | 2,144 | min | optimal 442 |
-| diameterc-mst__s_v20_a50_d5 | graph | 1,317 | 1,317 | 2,427 | min | feasible 381 |
-| diameterc-mst__s_v40_a100_d5 | graph | 3,888 | 3,888 | 7,375 | min | feasible 851 |
+| diameterc-mst__s_v20_a50_d5 | graph | 1,317 | 1,317 | 2,427 | min | optimal 381 |
+| diameterc-mst__s_v40_a100_d5 | graph | 3,888 | 3,888 | 7,375 | min | optimal 729 |
 | evilshop__js-brs2-5 | scheduling | 1,006 | 1,006 | 2,206 | min | optimal 77406 |
 | evilshop__js-brs2-7 | scheduling | 1,968 | 1,968 | 4,488 | min | feasible 87494 |
 | evilshop__js-setg2-10 | scheduling | 2,011 | 2,011 | 4,711 | min | feasible 64311 |
@@ -148,21 +150,21 @@ One folder per category, by what the problem is about, each with a list of its m
 | fillomino__16 | puzzle | 847 | 847 | 1,445 | sat | solved |
 | fillomino__20 | puzzle | 892 | 892 | 1,500 | sat | solved |
 | fillomino__7x7_0 | puzzle | 2,910 | 2,910 | 5,217 | sat | unknown |
-| filters__ar_1_2 | scheduling | 649 | 649 | 819 | min | feasible 18 |
-| filters__dct_1_1 | scheduling | 1,241 | 1,241 | 1,857 | min | feasible 34 |
+| filters__ar_1_2 | scheduling | 649 | 649 | 819 | min | optimal 18 |
+| filters__dct_1_1 | scheduling | 1,241 | 1,241 | 1,857 | min | optimal 34 |
 | filters__dct_4_4 | scheduling | 2,473 | 2,473 | 3,041 | min | feasible 11 |
 | filters__fir16_1_2 | scheduling | 805 | 805 | 1,028 | min | optimal 19 |
 | filters__fir_1_1 | scheduling | 278 | 278 | 404 | min | optimal 18 |
 | flexible-jobshop__easy01 | scheduling | 4,673 | 4,673 | 7,098 | min | optimal 253 |
 | flexible-jobshop__med10 | scheduling | 1,781 | 1,781 | 3,620 | min | feasible 954 |
-| freepizza__pizza6 | packing-cutting | 489 | 489 | 426 | min | feasible 220 |
-| gbac__reduced_UD10-gbac | rostering-timetabling | 4,024 | 4,024 | 1,030 | min | feasible 1030 |
+| freepizza__pizza6 | packing-cutting | 489 | 489 | 426 | min | optimal 210 |
+| gbac__reduced_UD10-gbac | rostering-timetabling | 4,024 | 4,024 | 1,030 | min | optimal 1015 |
 | gbac__reduced_UD4-gbac | rostering-timetabling | 4,754 | 4,754 | 1,050 | min | optimal 949 |
-| gbac__reduced_UD6-gbac | rostering-timetabling | 2,685 | 2,685 | 930 | min | feasible 248 |
+| gbac__reduced_UD6-gbac | rostering-timetabling | 2,685 | 2,685 | 930 | min | optimal 225 |
 | gbac__toy-gbac | rostering-timetabling | 388 | 388 | 140 | min | optimal 191 |
 | gfd-schedule__n10f2d10m10k3 | scheduling | 864 | 864 | 1,018 | min | optimal 3 |
 | gfd-schedule__n25f5d20m10k3 | scheduling | 4,116 | 4,116 | 6,430 | min | optimal 5 |
-| gfd-schedule__n30f3d30m7k4 | scheduling | 5,843 | 5,843 | 9,015 | min | feasible 217 |
+| gfd-schedule__n30f3d30m7k4 | scheduling | 5,843 | 5,843 | 9,015 | min | optimal 8 |
 | ghoulomb__3-3-3 | design | 99 | 99 | 57 | min | optimal 3 |
 | ghoulomb__3-4-6 | design | 711 | 711 | 136 | min | optimal 6 |
 | golfers__golfers_2_2_3 | design | 172 | 172 | 246 | sat | solved |
@@ -176,16 +178,16 @@ One folder per category, by what the problem is about, each with a list of its m
 | grid-colouring__4_11 | graph | 1,475 | 1,475 | 2,090 | min | optimal 3 |
 | grid-colouring__4_8 | graph | 833 | 833 | 1,160 | min | optimal 3 |
 | grid-colouring__5_6 | graph | 706 | 706 | 990 | min | optimal 3 |
-| grid-colouring__7_8 | graph | 1,877 | 1,877 | 2,828 | min | feasible 3 |
+| grid-colouring__7_8 | graph | 1,877 | 1,877 | 2,828 | min | optimal 3 |
 | hrc__exp1-0-10 | assignment-location | 691 | 691 | 610 | min | optimal 8 |
 | hrc__exp1-1-5670 | assignment-location | 1,732 | 1,732 | 1,878 | min | optimal 2 |
 | hrc__exp1-1-945 | assignment-location | 2,158 | 2,158 | 2,317 | min | optimal 11 |
-| hrc__exp2-1-4795 | assignment-location | 5,407 | 5,407 | 5,658 | min | unsat |
-| hrc__exp2-1-5180 | assignment-location | 6,272 | 6,272 | 6,484 | min | feasible 5 |
+| hrc__exp2-1-4795 | assignment-location | 5,407 | 5,407 | 5,658 | min | optimal 5 |
+| hrc__exp2-1-5180 | assignment-location | 6,272 | 6,272 | 6,484 | min | optimal 5 |
 | is__A3PZaPjnUz | other | 9,791 | 9,791 | 1,640 | min | optimal 103936 |
 | is__jZ9pQqRxJ2 | other | 3,007 | 3,007 | 1,325 | min | optimal 210944 |
-| java-auto-gen__binpack_11 | configuration | 2,223 | 2,223 | 3,497 | min | feasible 3 |
-| java-auto-gen__pizza_8_3 | configuration | 3,156 | 3,156 | 4,635 | min | feasible 21 |
+| java-auto-gen__binpack_11 | configuration | 2,223 | 2,223 | 3,497 | min | optimal 3 |
+| java-auto-gen__pizza_8_3 | configuration | 3,156 | 3,156 | 4,635 | min | optimal 20 |
 | java-auto-gen__plusexample_6 | configuration | 118 | 118 | 105 | min | optimal -43 |
 | java-auto-gen__projplan1_15_15 | configuration | 1,114 | 1,114 | 1,758 | min | optimal 5 |
 | java-auto-gen__routing_5 | configuration | 3,673 | 3,673 | 7,088 | min | feasible 69 |
@@ -298,9 +300,9 @@ One folder per category, by what the problem is about, each with a list of its m
 | open_stacks__wbo_30_15_1 | sequencing | 4,047 | 4,047 | 3,477 | min | feasible 10 |
 | open_stacks__wbop_20_10_1 | sequencing | 1,541 | 1,541 | 1,611 | min | optimal 8 |
 | open_stacks__wbop_30_10_1 | sequencing | 2,211 | 2,211 | 2,351 | min | feasible 14 |
-| openshop__gp10-4 | scheduling | 2,801 | 2,801 | 4,600 | min | feasible 1335 |
-| openshop__j7per10-1 | scheduling | 932 | 932 | 1,519 | min | feasible 1008 |
-| openshop__j8per0-2 | scheduling | 1,409 | 1,409 | 2,304 | min | feasible 1073 |
+| openshop__gp10-4 | scheduling | 2,801 | 2,801 | 4,600 | min | optimal 1077 |
+| openshop__j7per10-1 | scheduling | 932 | 932 | 1,519 | min | optimal 1000 |
+| openshop__j8per0-2 | scheduling | 1,409 | 1,409 | 2,304 | min | optimal 1052 |
 | opt-cryptanalysis__r4 | other | 6,753 | 6,753 | 769 | min | optimal 12 |
 | opt-cryptanalysis__r5 | other | 8,433 | 8,433 | 961 | min | optimal 20 |
 | p1f__4 | design | 209 | 209 | 245 | min | optimal 28 |
@@ -310,7 +312,7 @@ One folder per category, by what the problem is about, each with a list of its m
 | parity-learning__44_22_5.2 | other | 264 | 264 | 217 | min | optimal 2 |
 | parity-learning__44_22_5.3 | other | 259 | 259 | 197 | min | optimal 2 |
 | parity-learning__48_24_6.3 | other | 290 | 290 | 245 | min | unknown |
-| parity-learning__52_26_6.1 | other | 312 | 312 | 257 | min | feasible 6 |
+| parity-learning__52_26_6.1 | other | 312 | 312 | 257 | min | optimal 5 |
 | parity-learning__52_26_6.3 | other | 307 | 307 | 237 | min | optimal 1 |
 | pattern-set-mining__anneal-k1 | other | 503 | 503 | 1,039 | max | optimal 494 |
 | pentominoes__01 | puzzle | 2,588 | 2,588 | 1,592 | sat | solved |
@@ -324,7 +326,7 @@ One folder per category, by what the problem is about, each with a list of its m
 | project-planning__ProjectPlannertest_12_6 | scheduling | 2,694 | 2,694 | 4,681 | min | feasible 17 |
 | project-planning__ProjectPlannertest_13_8 | scheduling | 3,158 | 3,158 | 5,529 | min | feasible 25 |
 | project-planning__ProjectPlannertest_15_7 | scheduling | 4,197 | 4,197 | 7,446 | min | feasible 57 |
-| project-planning__ProjectPlannertest_16_8 | scheduling | 4,772 | 4,772 | 8,521 | min | feasible 44 |
+| project-planning__ProjectPlannertest_16_8 | scheduling | 4,772 | 4,772 | 8,521 | min | optimal 29 |
 | project-planning__ProjectPlannertest_17_9 | scheduling | 5,384 | 5,384 | 9,674 | min | feasible 48 |
 | prop_stress__0100 | synthetic | 202 | 202 | 5,251 | sat | unsat |
 | QCP__qcp-10-67-0_ext | puzzle | 737 | 737 | 334 | sat | solved |
@@ -366,9 +368,9 @@ One folder per category, by what the problem is about, each with a list of its m
 | rectangle-packing__data_square_rpp10_true | packing-cutting | 1,453 | 1,453 | 1,052 | sat | solved |
 | rectangle-packing__data_square_rpp15_false | packing-cutting | 4,170 | 4,170 | 2,723 | sat | solved |
 | rectangle-packing__data_square_rpp25_true | packing-cutting | 7,179 | 7,179 | 8,241 | sat | unknown |
-| road-cons__road_11 | scheduling | 4,491 | 4,491 | 8,277 | min | feasible 30005677 |
+| road-cons__road_11 | scheduling | 4,491 | 4,491 | 8,277 | min | optimal 5020 |
 | road-cons__road_8 | scheduling | 1,219 | 1,219 | 2,165 | min | feasible 5875 |
-| road-cons__road_9 | scheduling | 1,977 | 1,977 | 3,566 | min | feasible 7005683 |
+| road-cons__road_9 | scheduling | 1,977 | 1,977 | 3,566 | min | optimal 3206 |
 | schur_numbers__10-3 | design | 225 | 225 | 278 | sat | solved |
 | schur_numbers__5-3 | design | 50 | 50 | 58 | sat | solved |
 | schur_numbers__7-3 | design | 107 | 107 | 129 | sat | solved |
@@ -388,7 +390,7 @@ One folder per category, by what the problem is about, each with a list of its m
 | shortest_path__09 | routing | 1,025 | 1,025 | 257 | min | optimal 549 |
 | slow_convergence__0200 | synthetic | 102 | 102 | 1,325 | sat | solved |
 | smelt__smelt_2 | scheduling | 646 | 646 | 1,603 | min | optimal 69 |
-| smelt__smelt_3 | scheduling | 3,355 | 3,355 | 8,789 | min | feasible 3137 |
+| smelt__smelt_3 | scheduling | 3,355 | 3,355 | 8,789 | min | optimal 1117 |
 | smelt__smelt_4 | scheduling | 973 | 973 | 2,462 | min | optimal 1043 |
 | solbat__sb_12_12_5_0 | puzzle | 4,691 | 4,691 | 8,620 | sat | solved |
 | solbat__sb_12_12_5_1 | puzzle | 4,691 | 4,691 | 8,620 | sat | unknown |
@@ -397,13 +399,13 @@ One folder per category, by what the problem is about, each with a list of its m
 | solbat__sb_12_12_6_4 | puzzle | 4,908 | 4,908 | 9,895 | sat | solved |
 | spot5__1502 | scheduling | 3,983 | 3,983 | 1,054 | min | optimal 28042 |
 | spot5__29 | scheduling | 2,779 | 2,779 | 1,305 | min | optimal 8059 |
-| spot5__503 | scheduling | 5,959 | 5,959 | 1,849 | min | feasible 12122 |
-| spot5__54 | scheduling | 2,228 | 2,228 | 770 | min | feasible 37 |
+| spot5__503 | scheduling | 5,959 | 5,959 | 1,849 | min | optimal 11113 |
+| spot5__54 | scheduling | 2,228 | 2,228 | 770 | min | optimal 37 |
 | steiner-triples__07 | design | 576 | 576 | 1,021 | sat | solved |
 | steiner-triples__09 | design | 1,614 | 1,614 | 3,180 | sat | unknown |
-| still-life-wastage__09 | design | 2,131 | 2,131 | 2,933 | max | feasible 30 |
-| still-life-wastage__10 | design | 2,637 | 2,637 | 3,648 | max | feasible 36 |
-| still-life-wastage__11 | design | 3,197 | 3,197 | 4,441 | max | feasible 20 |
+| still-life-wastage__09 | design | 2,131 | 2,131 | 2,933 | max | optimal 43 |
+| still-life-wastage__10 | design | 2,637 | 2,637 | 3,648 | max | optimal 54 |
+| still-life-wastage__11 | design | 3,197 | 3,197 | 4,441 | max | optimal 64 |
 | still-life-wastage__12 | design | 3,811 | 3,811 | 5,312 | max | unknown |
 | still-life-wastage__13 | design | 4,479 | 4,479 | 6,261 | max | unknown |
 | still_life2__still_life_5 | design | 448 | 448 | 330 | max | optimal 16 |
@@ -416,15 +418,15 @@ One folder per category, by what the problem is about, each with a list of its m
 | still_life__8x8 | design | 1,277 | 1,277 | 853 | max | feasible 36 |
 | still_life__9x9 | design | 1,626 | 1,626 | 1,078 | max | feasible 24 |
 | stochastic-fjsp__fjsp-a1-s2_fjsp-t15-j3-m3-a1_det | scheduling | 800 | 800 | 1,078 | min | optimal 108 |
-| stochastic-fjsp__fjsp-a1-s3_fjsp-t20-j4-m3-a1_det | scheduling | 1,918 | 1,918 | 2,651 | min | feasible 217 |
+| stochastic-fjsp__fjsp-a1-s3_fjsp-t20-j4-m3-a1_det | scheduling | 1,918 | 1,918 | 2,651 | min | optimal 207 |
 | stochastic-fjsp__fjsp-a1-s4_fjsp-t8-j2-m3-a1_det | scheduling | 283 | 283 | 397 | min | optimal 242 |
 | stochastic-fjsp__fjsp-a1-s5_fjsp-t8-j2-m3-a1_det | scheduling | 342 | 342 | 489 | min | optimal 328 |
 | stochastic-fjsp__fjsp-a1-s6_fjsp-t8-j2-m3-a1_det | scheduling | 393 | 393 | 573 | min | optimal 348 |
-| stochastic-vrp__vrp-s2-v2-c7_vrp-v2-c7_det | routing | 894 | 894 | 2,051 | min | feasible 160 |
-| stochastic-vrp__vrp-s3-v2-c6_vrp-v2-c6_det | routing | 1,048 | 1,048 | 2,386 | min | feasible 194 |
-| stochastic-vrp__vrp-s3-v2-c7_vrp-v2-c7_det | routing | 1,337 | 1,337 | 3,076 | min | feasible 232 |
-| stochastic-vrp__vrp-s4-v2-c6_vrp-v2-c6_det | routing | 1,395 | 1,395 | 3,181 | min | feasible 221 |
-| stochastic-vrp__vrp-s5-v2-c8_vrp-v2-c8_det | routing | 2,764 | 2,764 | 6,426 | min | feasible 389 |
+| stochastic-vrp__vrp-s2-v2-c7_vrp-v2-c7_det | routing | 894 | 894 | 2,051 | min | optimal 160 |
+| stochastic-vrp__vrp-s3-v2-c6_vrp-v2-c6_det | routing | 1,048 | 1,048 | 2,386 | min | optimal 194 |
+| stochastic-vrp__vrp-s3-v2-c7_vrp-v2-c7_det | routing | 1,337 | 1,337 | 3,076 | min | optimal 230 |
+| stochastic-vrp__vrp-s4-v2-c6_vrp-v2-c6_det | routing | 1,395 | 1,395 | 3,181 | min | optimal 221 |
+| stochastic-vrp__vrp-s5-v2-c8_vrp-v2-c8_det | routing | 2,764 | 2,764 | 6,426 | min | optimal 330 |
 | sugiyama__g3_7_7_7 | graph | 512 | 512 | 883 | min | optimal 4 |
 | sugiyama__g4_7_7_7_3 | graph | 595 | 595 | 1,019 | min | feasible 7 |
 | sugiyama__g4_7_7_7_7 | graph | 753 | 753 | 1,297 | min | feasible 15 |
@@ -441,10 +443,10 @@ One folder per category, by what the problem is about, each with a list of its m
 | talent_scheduling__medium_film118 | sequencing | 941 | 941 | 1,155 | min | feasible 824 |
 | talent_scheduling__medium_MobStory | sequencing | 1,661 | 1,661 | 1,758 | min | feasible 1063 |
 | tc-graph-color__k10_31 | graph | 2,401 | 2,401 | 4,036 | min | optimal 427 |
-| tc-graph-color__k10_34 | graph | 2,464 | 2,464 | 4,171 | min | unknown |
+| tc-graph-color__k10_34 | graph | 2,464 | 2,464 | 4,171 | min | optimal 433 |
 | tc-graph-color__k10_41 | graph | 2,557 | 2,557 | 4,354 | min | unknown |
-| tc-graph-color__k5_05 | graph | 1,535 | 1,535 | 2,568 | min | feasible 275 |
-| tc-graph-color__k9_39 | graph | 2,371 | 2,371 | 3,988 | min | feasible 485 |
+| tc-graph-color__k5_05 | graph | 1,535 | 1,535 | 2,568 | min | optimal 273 |
+| tc-graph-color__k9_39 | graph | 2,371 | 2,371 | 3,988 | min | optimal 481 |
 | template_design__catfood_2 | packing-cutting | 181 | 181 | 338 | min | optimal 418 |
 | template_design__catfood_3 | packing-cutting | 275 | 275 | 496 | min | optimal 408 |
 | template_design__herbs_2 | packing-cutting | 2,797 | 2,797 | 5,517 | min | unknown |
