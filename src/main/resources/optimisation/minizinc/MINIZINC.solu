@@ -431,7 +431,7 @@ train__instance.5 feasible 78350
 train__instance.9 feasible 80600
 traveling-tppv__circ8abal feasible 98
 traveling-tppv__circ8bbal feasible 92
-traveling-tppv__circ8cbal feasible 100
+traveling-tppv__circ8cbal optimal 78
 traveling-tppv__circ8dbal feasible 94
 traveling-tppv__circ8ebal feasible 90
 triangular__n10 optimal 20

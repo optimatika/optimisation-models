@@ -10,13 +10,13 @@ The models and data are under the MIT license, see [LICENSE](LICENSE). A few mod
 
 [MINIZINC.solu](MINIZINC.solu) has a status – and objective value – per model, from HiGHS with a 30 s time limit. "solved" is a solution to a satisfaction problem. "feasible" (a solution, not proven optimal) and "unknown" only mean HiGHS did not get further in that time.
 
-Then checked against the [MiniZinc Challenge](https://www.minizinc.org/challenge/) results, 2010–2026 – each year's per-instance results are at `https://www.minizinc.org/challenge/<year>/results.json`. 185 of the models are challenge instances. Where a challenge solver proved an optimum, that optimum is used – once CP-SAT or SCIP proved, or reached, the same value on the FlatZinc file here, as a challenge instance can be another version of the model. That made 48 more models optimal, and the challenge agrees with all 88 of HiGHS's optimal values that are challenge instances. One, `gfd-schedule__n30f3d30m7k4`, is another version: CP-SAT and HiGHS both prove 8 here, the challenge's optimum is 1 – so it is optimal 8. Nine more have a proven challenge optimum that nothing has reached here yet, so they are still feasible or unknown. HiGHS 1.16 also called `hrc__exp2-1-4795` unsat – it has an optimum, 5. The other unsat ones are proven unsat by CP-SAT too.
+Then checked against the [MiniZinc Challenge](https://www.minizinc.org/challenge/) results, 2010–2026 – each year's per-instance results are at `https://www.minizinc.org/challenge/<year>/results.json`. 185 of the models are challenge instances. Where a challenge solver proved an optimum, that optimum is used – once CP-SAT or SCIP proved, or reached, the same value on the FlatZinc file here, as a challenge instance can be another version of the model. That made 49 more models optimal, and the challenge agrees with all 88 of HiGHS's optimal values that are challenge instances. One, `gfd-schedule__n30f3d30m7k4`, is another version: CP-SAT and HiGHS both prove 8 here, the challenge's optimum is 1 – so it is optimal 8. Eight more have a proven challenge optimum that nothing has reached here yet, so they are still feasible or unknown. HiGHS 1.16 also called `hrc__exp2-1-4795` unsat – it has an optimum, 5. The other unsat ones are proven unsat by CP-SAT too.
 
 | Status | Models |
 |:-------|-------:|
-| optimal | 250 |
+| optimal | 251 |
 | solved | 91 |
-| feasible | 61 |
+| feasible | 60 |
 | unsat | 12 |
 | unknown | 35 |
 
@@ -467,7 +467,7 @@ One folder per category, by what the problem is about, each with a list of its m
 | train__instance.9 | scheduling | 2,756 | 2,756 | 5,391 | min | feasible 80600 |
 | traveling-tppv__circ8abal | routing | 4,797 | 4,797 | 2,730 | min | feasible 98 |
 | traveling-tppv__circ8bbal | routing | 4,797 | 4,797 | 2,730 | min | feasible 92 |
-| traveling-tppv__circ8cbal | routing | 4,797 | 4,797 | 2,730 | min | feasible 100 |
+| traveling-tppv__circ8cbal | routing | 4,797 | 4,797 | 2,730 | min | optimal 78 |
 | traveling-tppv__circ8dbal | routing | 4,797 | 4,797 | 2,730 | min | feasible 94 |
 | traveling-tppv__circ8ebal | routing | 4,797 | 4,797 | 2,730 | min | feasible 90 |
 | triangular__n10 | design | 56 | 56 | 496 | max | optimal 20 |
